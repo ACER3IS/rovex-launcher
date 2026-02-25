@@ -1,6 +1,7 @@
 import { ipcMain, app } from 'electron'
 import { MicrosoftAuth } from 'eml-lib'
 import type { Account } from 'eml-lib'
+import logger from 'electron-log/main'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
@@ -17,6 +18,7 @@ export function registerAuthHandlers(mainWindow: Electron.BrowserWindow) {
       fs.writeFileSync(sessionPath, JSON.stringify(account))
       return { success: true, account } as IAuthResponse
     } catch (err: any) {
+      logger.error('Failed to login:', err)
       return { success: false, error: err.message ?? 'Unknown error' }
     }
   })
@@ -41,6 +43,7 @@ export function registerAuthHandlers(mainWindow: Electron.BrowserWindow) {
       }
       return { success: false }
     } catch (err: any) {
+      logger.error('Failed to refresh session:', err)
       return { success: false, error: err.message }
     }
   })
@@ -52,4 +55,5 @@ export function registerAuthHandlers(mainWindow: Electron.BrowserWindow) {
     return { success: true }
   })
 }
+
 

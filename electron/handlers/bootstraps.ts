@@ -1,6 +1,7 @@
 import type Electron from 'electron'
 import { ipcMain } from 'electron'
 import { Bootstraps } from 'eml-lib'
+import logger from 'electron-log/main'
 import { ADMINTOOL_URL } from '../const'
 
 let bootstraps: Bootstraps | null = null
@@ -26,7 +27,7 @@ export function registerBootstrapHandlers(mainWindow: Electron.BrowserWindow) {
     try {
       return await bootstraps?.checkForUpdate()
     } catch (err) {
-      console.error('Error checking for bootstraps update', err)
+      logger.error('Error checking for bootstraps update', err)
       return { updateAvailable: false }
     }
   })
@@ -39,4 +40,5 @@ export function registerBootstrapHandlers(mainWindow: Electron.BrowserWindow) {
     return await bootstraps?.runUpdate()
   })
 }
+
 

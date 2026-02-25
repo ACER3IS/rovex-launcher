@@ -1,4 +1,5 @@
 import type { Account } from 'eml-lib'
+import logger from 'electron-log/renderer'
 
 export type ViewName = 'loading' | 'login' | 'home' | 'settings'
 export type BlockingViewName = 'maintenance' | 'update'
@@ -23,7 +24,7 @@ export function logout() {
 function updateUserInterface() {
   if (!currentAccount) return
 
-  console.log('Updating UI for user:', currentAccount.name)
+  logger.log('Updating UI for user:', currentAccount.name)
 
   const nameEl = document.getElementById('user-name')
   const avatarEl = document.getElementById('user-avatar') as HTMLImageElement
@@ -40,7 +41,7 @@ function updateUserInterface() {
 
 export function setView(view: ViewName) {
   const target = document.querySelector(`.view[data-view="${view}"]`) as HTMLElement
-  if (!target) return console.error(`View ${view} not found`)
+  if (!target) return logger.error(`View ${view} not found`)
 
   const isOverlay = target.classList.contains('overlay')
 

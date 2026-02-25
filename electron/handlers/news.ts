@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron'
 import { News } from 'eml-lib'
 import type { INews} from 'eml-lib'
+import logger from 'electron-log/main'
 import { ADMINTOOL_URL } from '../const'
 
 export function registerNewsHandlers() {
@@ -10,7 +11,7 @@ export function registerNewsHandlers() {
       const feed = (await news.getNews()) as INews[]
       return feed
     } catch (err) {
-      console.error('Failed to fetch news:', err)
+      logger.error('Failed to fetch news:', err)
       return []
     }
   })
@@ -21,9 +22,10 @@ export function registerNewsHandlers() {
       const feed = await news.getCategories()
       return feed
     } catch (err) {
-      console.error('Failed to fetch news:', err)
+      logger.error('Failed to fetch news:', err)
       return []
     }
   })
 }
+
 

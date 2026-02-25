@@ -1,4 +1,5 @@
 import { ipcMain, app, screen, dialog } from 'electron'
+import logger from 'electron-log/main'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as os from 'node:os'
@@ -52,7 +53,7 @@ export function registerSettingsHandlers() {
       const data = fs.readFileSync(settingsPath, 'utf-8')
       return { ...DEFAULT_SETTINGS, ...JSON.parse(data) }
     } catch (err) {
-      console.error('Error reading settings:', err)
+      logger.error('Error reading settings:', err)
       return DEFAULT_SETTINGS
     }
   })
@@ -62,7 +63,7 @@ export function registerSettingsHandlers() {
       fs.writeFileSync(settingsPath, JSON.stringify(newSettings, null, 2))
       return true
     } catch (err) {
-      console.error('Error writing settings:', err)
+      logger.error('Error writing settings:', err)
       return false
     }
   })
