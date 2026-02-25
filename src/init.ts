@@ -1,5 +1,6 @@
 import { setBlockingView, setUser, setView } from './state'
 import { auth, background, bootstraps, maintenance } from './ipc'
+import logger from 'electron-log/renderer'
 // import _mockSession from './_mock-msa'
 
 const DEFAULT_BACKGROUND = '/src/static/images/bg.png'
@@ -21,7 +22,7 @@ function preloadImage(url: string): Promise<void> {
 }
 
 export async function bootstrap() {
-  console.log('Initializing Launcher...')
+  logger.log('Initializing Launcher...')
 
   const bgElement = document.querySelector('.app-background') as HTMLElement
   const maintenanceDates = document.getElementById('maintenance-dates')!
@@ -66,10 +67,10 @@ export async function bootstrap() {
       await bootstraps.install()
     })
     bootstraps.error((err) => {
-      console.error('Error while downloading bootstraps:', err)
+      logger.error('Error while downloading bootstraps:', err)
     })
     await bootstraps.download()
-    console.log('Update installed, restarting launcher...')
+    logger.log('Update installed, restarting launcher...')
     setTimeout(() => {
       window.location.reload()
     }, 1000)
@@ -101,7 +102,7 @@ export async function bootstrap() {
       setView('login')
     }
   } catch (err) {
-    console.error('Error while itializing launcher:', err)
+    logger.error('Error while itializing launcher:', err)
     if (bgElement) bgElement.style.backgroundImage = `url('${DEFAULT_BACKGROUND}')`
     setView('login')
   } finally {

@@ -159,7 +159,7 @@ Ready to launch the game with the following settings:
 🚀 Action on launch: ${config.launcherAction}
     `
 
-    console.log(message)
+    logger.log(message)
     game.launch({ account: user, settings: config })
   })
 

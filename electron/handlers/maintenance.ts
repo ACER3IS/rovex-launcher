@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron'
 import { Maintenance } from 'eml-lib'
+import logger from 'electron-log/main'
 import { ADMINTOOL_URL } from '../const'
 
 export function registerMaintenanceHandlers() {
@@ -10,9 +11,10 @@ export function registerMaintenanceHandlers() {
       const status = await maintenance.getMaintenance()
       return status?.startTime && new Date(status.startTime) <= new Date() ? status : null
     } catch (err) {
-      console.error('Failed to fetch maintenance:', err)
+      logger.error('Failed to fetch maintenance:', err)
       return null
     }
   })
 }
+
 

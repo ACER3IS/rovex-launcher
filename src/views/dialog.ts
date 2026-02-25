@@ -57,7 +57,7 @@ class DialogSystem {
                 resolve(true as any)
                 break
               case 'other':
-                console.warn("The 'other' type button requires an action!")
+                logger.warn("The 'other' type button requires an action!")
                 resolve(null as any)
                 break
             }

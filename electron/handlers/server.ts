@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron'
 import { ServerStatus } from 'eml-lib'
+import logger from 'electron-log/main'
 
 export function registerServerHandlers() {
   ipcMain.handle('server:status', async (_event, ip: string, port: number = 25565) => {
@@ -8,8 +9,9 @@ export function registerServerHandlers() {
       const status = await server.getStatus()
       return status
     } catch (err) {
-      console.error('Failed to get server status:', err)
+      logger.error('Failed to get server status:', err)
       return null
     }
   })
 }
+

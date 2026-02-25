@@ -9,6 +9,7 @@ import { registerNewsHandlers } from './handlers/news'
 import { registerBackgroundHandlers } from './handlers/background'
 import { registerMaintenanceHandlers } from './handlers/maintenance'
 import { registerBootstrapHandlers } from './handlers/bootstraps'
+import logger from 'electron-log/main'
 
 const APP_TITLE = 'EML Template'
 const BG_COLOR = '#121212'
@@ -109,8 +110,8 @@ function configureAppMenu() {
 }
 
 app.whenReady().then(() => {
+  logger.initialize()
   configureAppMenu()
-
   createWindow()
 
   if (mainWindow) {
