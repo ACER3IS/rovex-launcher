@@ -10,22 +10,21 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "dist:win": "npm run build && electron-builder --win",
-    "dist:mac": "npm run build && electron-builder --mac",
-    "dist:lin": "npm run build && electron-builder --linux"
+    "release:win": "npm run build && electron-builder --win",
+    "release:mac": "npm run build && electron-builder --mac",
+    "release:lin": "npm run build && electron-builder --linux"
   },
   "build": {
     "appId": "com.eml.template",
     "productName": "EML Template",
     "copyright": "Copyright © 2026 EML",
     "directories": {
-      "output": "dist",
+      "output": "release",
       "buildResources": "build"
     },
     "files": [
-      "dist/**/*",
-      "electron/**/*",
-      "dist-electron/**/*",
+      "dist",
+      "dist-electron",
       "package.json",
       "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
       "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
