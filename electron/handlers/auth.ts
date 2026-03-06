@@ -1,5 +1,5 @@
 import { ipcMain, app } from 'electron';
-import EMLLib from 'eml-lib';                 // импортируем весь модуль
+import AzuriomAuth from 'eml-lib';          // импорт по умолчанию (как рекомендует ошибка)
 import type { Account } from 'eml-lib';
 import logger from 'electron-log/main';
 import * as fs from 'node:fs';
@@ -14,8 +14,8 @@ export function registerAuthHandlers(_mainWindow: Electron.BrowserWindow) {
   ipcMain.handle('auth:login', async (_event, username: string, password: string) => {
     try {
       logger.info(`Attempting Azuriom login for user: ${username}`);
-      // Используем EMLLib.AzuriomAuth
-      const account = await new EMLLib.AzuriomAuth().auth(
+      // Используем импортированный класс напрямую
+      const account = await new AzuriomAuth().auth(
         username,
         password,
         'https://rovexplay.ru'
