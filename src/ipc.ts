@@ -21,7 +21,7 @@ declare global {
   interface Window {
     api: {
       auth: {
-        login: () => Promise<IAuthResponse>
+        login: (username: string, password: string) => Promise<IAuthResponse>   // изменено
         refresh: () => Promise<IAuthResponse>
         logout: () => Promise<{ success: boolean }>
       }
@@ -97,7 +97,7 @@ declare global {
 }
 
 export const auth = {
-  login: async () => await window.api.auth.login(),
+  login: async (username: string, password: string) => await window.api.auth.login(username, password), // изменено
   logout: async () => await window.api.auth.logout(),
   refresh: async () => await window.api.auth.refresh()
 }
@@ -168,4 +168,3 @@ export const settings = {
 export const system = {
   getInfo: () => window.api.system.getInfo()
 }
-
