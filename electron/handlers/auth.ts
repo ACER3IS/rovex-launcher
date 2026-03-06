@@ -1,5 +1,5 @@
 import { ipcMain, app } from 'electron';
-import { AzuriomAuth } from 'eml-lib';
+import AzuriomAuth from 'eml-lib'; // ← импорт по умолчанию
 import type { Account } from 'eml-lib';
 import logger from 'electron-log/main';
 import * as fs from 'node:fs';
@@ -9,15 +9,15 @@ const sessionPath = path.join(app.getPath('userData'), 'session.json');
 
 export type IAuthResponse = { success: true; account: Account } | { success: false; error?: string };
 
-export function registerAuthHandlers(mainWindow: Electron.BrowserWindow) {
+export function registerAuthHandlers(_mainWindow: Electron.BrowserWindow) {
   // Вход с логином и паролем
-  ipcMain.handle('auth:login', async (event, username: string, password: string) => {
+  ipcMain.handle('auth:login', async (_event, username: string, password: string) => {
     try {
       logger.info(`Attempting Azuriom login for user: ${username}`);
       const account = await new AzuriomAuth().auth(
         username,
         password,
-        'https://rovexplay.ru' // замените на свой сайт
+        'https://rovexplay.ru'
       );
       fs.writeFileSync(sessionPath, JSON.stringify(account));
       return { success: true, account } as IAuthResponse;
